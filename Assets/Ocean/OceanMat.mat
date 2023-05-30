@@ -19,13 +19,35 @@ Material:
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
-    m_TexEnvs: []
+    m_TexEnvs:
+    - _FoamTexture:
+        m_Texture: {fileID: 2800000, guid: 95203bfc15a52e34eb25fe95642b419b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Normal1:
+        m_Texture: {fileID: 2800000, guid: 979ae3c4c4ed17b4dab01cbfdd692585, type: 3}
+        m_Scale: {x: 5, y: 5}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _Alpha: 0.476
+    - _DepthMaxDistance: 35.65
+    - _FoamDistance: 15.7
+    - _FoamValue: 0.364
     - _Speed: 0.2
-    - _Steepness: 0.357
+    - _Steepness: 0.35
+    - _SurfaceNoiseCutoff: 0.586
+    - _WaterFogDensity: 0.03
+    - _WaterFogDensity2: 0.1
     - _Wavelengh: 0.29
     m_Colors:
+    - _DepthGradientDeep: {r: 0.24827339, g: 0.29831967, b: 0.41509432, a: 0.749}
+    - _DepthGradientShallow: {r: 0, g: 0.7464113, b: 1, a: 0.725}
     - _Direction: {r: 1, g: 1, b: 0, a: 0}
-    - _OceanColor: {r: 0.119989306, g: 0.58933014, b: 0.5943396, a: 1}
+    - _FoamColor: {r: 1, g: 1, b: 1, a: 1}
+    - _OceanColor: {r: 0.20793873, g: 0.5637348, b: 0.6226415, a: 1}
+    - _ShallowColor: {r: 0.32499996, g: 0.807, b: 0.971, a: 0.725}
+    - _WaterBackground: {r: 0.17070128, g: 0.39304247, b: 0.6603774, a: 1}
+    - _WaterFogColor: {r: 0.16105375, g: 0.20928138, b: 0.2735849, a: 1}
+    - _WaterFogColor2: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

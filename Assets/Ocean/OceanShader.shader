@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+
 Shader "Unlit/OceanShader"
 {
     Properties
@@ -39,6 +41,7 @@ Shader "Unlit/OceanShader"
                 float2 uv : TEXCOORD0;
                 float3 normal : TEXCOORD1;
                 float4 vertex : SV_POSITION;
+                float3 worldPos : TEXCOORD2;
             };
 
             fixed4 _OceanColor;
@@ -52,7 +55,6 @@ Shader "Unlit/OceanShader"
             v2f vert (appdata v)
             {
                 v2f o;
-
                 
                 float k = (2 * PI) / (_Wavelengh);
                 float c = sqrt(9.8 / k) * _Speed;
@@ -76,8 +78,9 @@ Shader "Unlit/OceanShader"
               o.normal = normal;
 
                 o.vertex = UnityObjectToClipPos(v.vertex);
-                o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-                UNITY_TRANSFER_FOG(o,o.vertex);
+                //o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+              
+                
                 return o;
             }
 
@@ -86,7 +89,7 @@ Shader "Unlit/OceanShader"
                 //// sample the texture
                 //fixed4 col = tex2D(_MainTex, i.uv);
 
-                //float wave = cos((i.uv.y - _Time.y * 0.1) * 6.2831855 * 5) * 0.5 + 0.5;
+                float wave = cos((i.uv.y - _Time.y * 0.1) * 6.2831855 * 5) * 0.5 + 0.5;
 
                 return _OceanColor; 
              
