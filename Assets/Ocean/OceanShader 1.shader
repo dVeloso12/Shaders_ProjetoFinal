@@ -9,7 +9,7 @@ Shader "Custom/OceanShader 1"
 		_WaterBackground ("Ocean Color", Color) = (1,1,1,1)
         _Alpha ("Alpha",Range(0,1)) = 1
 		_Normal1("Ocean Normal 1",2D) = "defaulttexture"{}
-
+		_OceanSpeed("OCean Speed", Vector) = (0.03, 0.03, 0, 0)
 
 		[Header(Ocean Math)] 
 		[Space]
@@ -25,6 +25,7 @@ Shader "Custom/OceanShader 1"
 		[Space]
 		_ShallowColor("Depth Gradient Shallow", Color) = (0.325, 0.807, 0.971, 0.725)
 		_FoamColor("Foam Color", Color) = (1, 1, 1, 1)
+		
 		_DepthMaxDistance("Depth Maximum Distance", Float) = 1
         _FoamDistance ("Foam Distance",Float) = 1
 		_FoamTexture("Noise Texture",2D) = "defaulttexture"{}
@@ -50,6 +51,7 @@ Shader "Custom/OceanShader 1"
 			float2 uv_FoamTexture;
 			float4 screenPos;
 			float2 uv_Normal1;
+			float3 viewNormal;
 		};
 
 		    fixed4 _OceanColor;
@@ -64,10 +66,10 @@ Shader "Custom/OceanShader 1"
 
 			float4 _ShallowColor;
 			float4 _FoamColor;
+			float2 _OceanSpeed;
 	
 
 			float _DepthMaxDistance;
-
 
 		void vert(inout appdata_full vertexData) {
 
@@ -77,7 +79,7 @@ Shader "Custom/OceanShader 1"
 
          float2 dotp = dot(d,vertexData.vertex.xz);
 
-         float f = k * (dotp - speed * _Time.y);
+         float f = k * (dotp - speed * _Time.y );
 
          float a = _Steepness / k;
 
@@ -89,7 +91,8 @@ Shader "Custom/OceanShader 1"
          float3 binormal = float3(-d.x * d.y * (_Steepness * sin(f)),d.y * (_Steepness * cos(f)),1-d.y * d.y * (_Steepness * sin(f)));
 
          float3 normal = normalize(cross(binormal,tangent));
-         vertexData.normal = normal;	
+         //vertexData.normal = normal;
+	
 		}
 
 		void surf (Input IN, inout SurfaceOutputStandard o) {
@@ -101,8 +104,10 @@ Shader "Custom/OceanShader 1"
 			float waterDepthDifference01 = saturate(depthDifference / _DepthMaxDistance);
 			float4 waterColor = lerp(_ShallowColor, _WaterFogColor, waterDepthDifference01);
 	
+			float2 noiseUVFoam = float2(IN.uv_FoamTexture.x + _Time.y * _OceanSpeed.x, IN.uv_FoamTexture.y + _Time.y * _OceanSpeed.y);
+			float2 normalUV = float2(IN.uv_Normal1.x + _Time.y * _OceanSpeed.x, IN.uv_Normal1.y + _Time.y * _OceanSpeed.y);
 
-			float surfaceNoiseSample = tex2D(_FoamTexture, IN.uv_FoamTexture).r;
+			float surfaceNoiseSample = tex2D(_FoamTexture, noiseUVFoam).r;
 			surfaceNoiseSample = surfaceNoiseSample;
 
 			float foamDepthDifference01 = saturate(depthDifference / _FoamDistance);
@@ -110,12 +115,13 @@ Shader "Custom/OceanShader 1"
 
 			float surfaceNoise = surfaceNoiseSample > surfaceNoiseCutoff ? 1 : 0;
 
-			
 
-			o.Albedo = waterColor + (surfaceNoise * _FoamColor);
+			o.Albedo = waterColor + (_FoamColor* surfaceNoise);
 			o.Alpha = _Alpha;
 			o.Emission = ColorBelowWater(IN.screenPos) * (1 - o.Alpha);
-			o.Normal = tex2D(_Normal1,IN.uv_Normal1);
+
+			o.Normal = tex2D(_Normal1,normalUV);
+			
 			
 			
 		}
