@@ -8,6 +8,8 @@ Shader "Custom/OceanShader 1"
 		[Space]
 		_WaterBackground ("Ocean Color", Color) = (1,1,1,1)
         _Alpha ("Alpha",Range(0,1)) = 1
+        _Test ("Test",Range(0,100)) = 1
+
 		_Normal1("Ocean Normal 1",2D) = "defaulttexture"{}
 		_OceanSpeed("OCean Speed", Vector) = (0.03, 0.03, 0, 0)
 
@@ -52,6 +54,7 @@ Shader "Custom/OceanShader 1"
 			float4 screenPos;
 			float2 uv_Normal1;
 			float3 viewNormal;
+			float3 localPos;
 	
 		};
 
@@ -68,7 +71,7 @@ Shader "Custom/OceanShader 1"
 			float4 _ShallowColor;
 			float4 _FoamColor;
 			float2 _OceanSpeed;
-	
+			float _Test;
 
 			float _DepthMaxDistance;
 
@@ -87,16 +90,13 @@ Shader "Custom/OceanShader 1"
          vertexData.vertex.y =  a * sin(f);
          vertexData.vertex.x +=  d.x * (a * cos(f));
          vertexData.vertex.z +=  d.y * (a * cos(f));
-         o.vertexData = vertexData;
+		o.localPos = vertexData.vertex.xyz;
 		 
          float3 tangent = normalize(float3(1- k * _Steepness * sin(f),k * _Steepness * cos(f),0));
          float3 binormal = float3(-d.x * d.y * (_Steepness * sin(f)),d.y * (_Steepness * cos(f)),1-d.y * d.y * (_Steepness * sin(f)));
 
          float3 normal = normalize(cross(binormal,tangent));
-		 if(vertexData.vertex.y < 0.01)
-		 {
-         vertexData.normal = normal;
-		 }
+
 	
 		}
 
@@ -121,8 +121,13 @@ Shader "Custom/OceanShader 1"
 			float surfaceNoise = surfaceNoiseSample > surfaceNoiseCutoff ? 1 : 0;
 
 			o.Albedo = waterColor + (_FoamColor* surfaceNoise);
+
+			if(max(0,IN.localPos.y))
+			{
 			
-			
+			o.Albedo += _FoamColor * tex2D(_FoamTexture, IN.uv_FoamTexture);
+
+			}	
 			o.Alpha = _Alpha;
 			o.Emission = ColorBelowWater(IN.screenPos) * (1 - o.Alpha);
 

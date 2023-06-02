@@ -37,6 +37,7 @@ Material:
     - _Speed: 0.2
     - _Steepness: 0.35
     - _SurfaceNoiseCutoff: 0.586
+    - _Test: 0
     - _WaterFogDensity: 0.03
     - _WaterFogDensity2: 0.1
     - _Wavelengh: 0.29
