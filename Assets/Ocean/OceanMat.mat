@@ -34,12 +34,17 @@ Material:
     - _DepthMaxDistance: 35.65
     - _FoamDistance: 18.65
     - _FoamValue: 0.364
+    - _Metallic: 0.333
     - _Speed: 0.2
     - _Steepness: 0.35
     - _SurfaceNoiseCutoff: 0.586
-    - _Test: 0
+    - _Test: 49.7
+    - _Test2: 21.7
     - _WaterFogDensity: 0.03
     - _WaterFogDensity2: 0.1
+    - _WaveDistance: 48.1
+    - _WaveFoamDensity: 100
+    - _WaveFoamDistance: 57.8
     - _Wavelengh: 0.29
     m_Colors:
     - _DepthGradientDeep: {r: 0.24827339, g: 0.29831967, b: 0.41509432, a: 0.749}

@@ -8,6 +8,18 @@ public class WaterController : MonoBehaviour
     [SerializeField] Material oceanMat;
     [SerializeField] WavesData waveData;
 
+    private void Start()
+    {
+        //Vector3[] meshVerts = someRandomGameobject.GetComponent().mesh.vertices;
+        //Vector3 vertPos = gameobj.transform.position + transform.TransfomrPoint(meshVerts[0]);
+
+        //var vertices = GameObject.Find("Ocean").GetComponent<MeshFilter>().mesh.vertices;
+        //for (int i = 0; i < vertices.Length; i++)
+        //{
+        //    Vector3 worldPT = transform.TransformPoint(vertices[i]);
+        //    Debug.Log(worldPT);
+        //}
+    }
 
     private void Awake()
     {
@@ -45,6 +57,8 @@ public class WaterController : MonoBehaviour
         }
 
         return currentPosition.y;
+        
+
     }
 
     public Vector3 GetWaveAddition(Vector3 position, float timeSinceStart)
