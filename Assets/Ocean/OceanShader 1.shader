@@ -8,8 +8,7 @@ Shader "Custom/OceanShader 1"
 		[Space]
 		_WaterBackground ("Ocean Color", Color) = (1,1,1,1)
         _Alpha ("Alpha",Range(0,1)) = 1
-        _Test ("Test",Range(0,100)) = 1
-
+        _Metallic ("Metallic",Range(0,1)) = 1
 		_Normal1("Ocean Normal 1",2D) = "defaulttexture"{}
 		_OceanSpeed("OCean Speed", Vector) = (0.03, 0.03, 0, 0)
 
@@ -23,7 +22,7 @@ Shader "Custom/OceanShader 1"
 		[Space]
 		_WaterFogColor ("Water Fog Color", Color) = (0, 0, 0, 0)
 		_WaterFogDensity ("Water Fog Density", Range(0, 2)) = 0.1
-		[Header(Foam)] 
+		[Header(Foam Edges)] 
 		[Space]
 		_ShallowColor("Depth Gradient Shallow", Color) = (0.325, 0.807, 0.971, 0.725)
 		_FoamColor("Foam Color", Color) = (1, 1, 1, 1)
@@ -31,6 +30,11 @@ Shader "Custom/OceanShader 1"
 		_DepthMaxDistance("Depth Maximum Distance", Float) = 1
         _FoamDistance ("Foam Distance",Float) = 1
 		_FoamTexture("Noise Texture",2D) = "defaulttexture"{}
+
+		[Header(Foam Waves)] 
+		[Space]
+		_WaveFoamDistance ("Wave Foam Distance",Range(0,100)) = 1
+        _WaveFoamDensity ("Wave Foam Density",Range(0,100)) = 1
 	}
 	SubShader {
 		Tags { "RenderType"="Transparent" "Queue"="Transparent" }
@@ -71,9 +75,10 @@ Shader "Custom/OceanShader 1"
 			float4 _ShallowColor;
 			float4 _FoamColor;
 			float2 _OceanSpeed;
-			float _Test;
-
+			float _WaveFoamDistance;
+			float _WaveFoamDensity;
 			float _DepthMaxDistance;
+			float _Metallic;
 
 		void vert(inout appdata_full vertexData,out Input o) {
 			UNITY_INITIALIZE_OUTPUT(Input,o);
@@ -113,7 +118,7 @@ Shader "Custom/OceanShader 1"
 			float2 normalUV = float2(IN.uv_Normal1.x + _Time.y * _OceanSpeed.x, IN.uv_Normal1.y + _Time.y * _OceanSpeed.y);
 
 			float surfaceNoiseSample = tex2D(_FoamTexture, noiseUVFoam).r;
-			surfaceNoiseSample = surfaceNoiseSample;
+			
 
 			float foamDepthDifference01 = saturate(depthDifference / _FoamDistance);
 			float surfaceNoiseCutoff = foamDepthDifference01 * 1;
@@ -121,18 +126,19 @@ Shader "Custom/OceanShader 1"
 			float surfaceNoise = surfaceNoiseSample > surfaceNoiseCutoff ? 1 : 0;
 
 			o.Albedo = waterColor + (_FoamColor* surfaceNoise);
-
+			o.Alpha = _Alpha;
+			
 			if(max(0,IN.localPos.y))
 			{
+			float surfaceNoiseSampleF = tex2D(_FoamTexture, IN.uv_FoamTexture).r;
+			float surfaceNoiseCutoffF = saturate(_WaveFoamDistance / _WaveFoamDensity);
+			float surfaceNoiseF = surfaceNoiseSampleF > surfaceNoiseCutoffF ? 1 : 0;
+			o.Albedo += _FoamColor * surfaceNoiseF;
 			
-			o.Albedo += _FoamColor * tex2D(_FoamTexture, IN.uv_FoamTexture);
-
-			}	
-			o.Alpha = _Alpha;
-			o.Emission = ColorBelowWater(IN.screenPos) * (1 - o.Alpha);
-
+			}
+			o.Smoothness = 1-_Metallic;
 			o.Normal = tex2D(_Normal1,normalUV);
-			
+			o.Emission = ColorBelowWater(IN.screenPos) * (1 - o.Alpha);
 			
 			
 		}
