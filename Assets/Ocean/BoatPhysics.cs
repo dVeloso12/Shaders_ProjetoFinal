@@ -12,7 +12,7 @@ public class BoatPhysics : MonoBehaviour
     public float waterDrag = 0.99f;
     public float waterAngularDrag = 0.5f;
 
-    WaterController controller;
+   public WaterController controller;
 
     private void Start()
     {
@@ -24,7 +24,7 @@ public class BoatPhysics : MonoBehaviour
 
         float waveHeight = controller.getHeightAtPosition(transform.position);
 
-        //transform.position = new Vector3(transform.position.x, waveHeight, transform.position.z);
+        
         if (transform.position.y < waveHeight)
         {
             float displacementMultiplier = Mathf.Clamp01((waveHeight - transform.position.y) / depthBeforeSubmerged) * cubeVolume;
