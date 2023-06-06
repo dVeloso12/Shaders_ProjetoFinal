@@ -10,10 +10,13 @@ public class WaterController : MonoBehaviour
 
     public float Test;
     public Vector3[] vertices;
+    [SerializeField] GameObject OceanPart;
+    [SerializeField] Vector2 Amount;
 
     private void Awake()
     {
         waveData = GetDataFromShader();
+        SpawnOcean();
     }
 
     private void Update()
@@ -21,6 +24,31 @@ public class WaterController : MonoBehaviour
         UpdateOceanMatValues();
     }
 
+
+    public void SpawnOcean()
+    {
+        GameObject oceanBase = new GameObject("OceanParts");
+        for (int i = 1; i <= Amount.x; i++)
+        {
+            var xpart = Instantiate(OceanPart, new Vector3(-100 * i, 0, 0), Quaternion.identity, oceanBase.transform);
+            var xpart1 = Instantiate(OceanPart, new Vector3(100 * i, 0, 0), Quaternion.identity, oceanBase.transform);
+
+            for (int y = 1; y <= Amount.y; y++)
+            {
+                var ypart = Instantiate(OceanPart, new Vector3(0, 0, -100 * i), Quaternion.identity, oceanBase.transform);
+                var ypart1 = Instantiate(OceanPart, new Vector3(0, 0, 100 * i), Quaternion.identity, oceanBase.transform);
+
+                var Otherpart1 = Instantiate(OceanPart, new Vector3(100*i, 0, -100 * y), Quaternion.identity, oceanBase.transform);
+                var Otherpart2 = Instantiate(OceanPart, new Vector3(100 * i, 0, 100 * y), Quaternion.identity, oceanBase.transform);
+
+                var Otherpart3 = Instantiate(OceanPart, new Vector3(-100 * i, 0, 100 * y), Quaternion.identity, oceanBase.transform);
+                var Otherpart4 = Instantiate(OceanPart, new Vector3(-100 * i, 0, -100 * y), Quaternion.identity, oceanBase.transform);
+
+
+
+            }
+        }
+    }
     public WavesData GetDataFromShader()
     {
         if(oceanMat != null)

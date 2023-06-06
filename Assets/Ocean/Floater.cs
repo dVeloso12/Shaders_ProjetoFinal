@@ -30,8 +30,8 @@ public class Floater : MonoBehaviour
         FloatersUnderWater = 0;
         for (int i = 0; i < Floaters.Length; i++)
         {
-            float diff = Floaters[i].position.y - wave.getHeightAtPosition(Floaters[i].position);
-            //float diff = Floaters[i].position.y - WaterHeight;
+            //float diff = Floaters[i].position.y - wave.getHeightAtPosition(Floaters[i].position);
+            float diff = Floaters[i].position.y - WaterHeight;
 
             if (diff < 0)
             {

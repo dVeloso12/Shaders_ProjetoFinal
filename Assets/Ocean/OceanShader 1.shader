@@ -92,9 +92,9 @@ Shader "Custom/OceanShader 1"
 
          float a = _Steepness / k;
 
-         vertexData.vertex.y = (a * sin(f));
-         vertexData.vertex.x += (d.x * (a * cos(f)));
-         vertexData.vertex.z +=  (d.y * (a * cos(f)));
+         //vertexData.vertex.y = (a * sin(f));
+         //vertexData.vertex.x += (d.x * (a * cos(f)));
+         //vertexData.vertex.z +=  (d.y * (a * cos(f)));
 		o.localPos = vertexData.vertex.xyz;
 		 
          float3 tangent = normalize(float3(1- k * _Steepness * sin(f),k * _Steepness * cos(f),0));
