@@ -3,6 +3,7 @@ Shader "Unlit/detect"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
+        _NoiseTex ("cutount_texture", 2D) = "defaulttexture" {}
         _slider ("bruh", Range (0, 100)) = 0
        
     }
@@ -36,6 +37,7 @@ Shader "Unlit/detect"
             };
 
             sampler2D _MainTex;
+            sampler2D _NoiseTex;
             float4 _MainTex_ST;
             float3 _position_boat;
             float  _slider;
@@ -57,16 +59,16 @@ Shader "Unlit/detect"
             {
                
                 fixed4 col =float4(1,1,1,1);
-              
+             
                 i.render=distance(i.wpos.xyz,_position_boat.xyz);
                 i.render/=_slider;
                 i.render=saturate(1-i.render);
                 col.a=i.render;
-                if(i.render>0.1 && i.render<0.5)
+                if(i.render>0 && i.render<0.1)
                 {
                  col.rgb=float4(1,1,0,1);
+            
                 }
- 
                 return col;
             }
             ENDCG
