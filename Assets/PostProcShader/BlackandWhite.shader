@@ -4,6 +4,7 @@ Shader "Hidden/BlackandWhite"
     {
         _MainTex ("Texture", 2D) = "white" {}
         _RenderTex ("RenTexture", 2D) = "white" {}
+        _Color("Color",Color) = (0,0,0,0) 
 
         [HideInInspector]
         _TurnOn("On",int)= 0
@@ -61,6 +62,7 @@ Shader "Hidden/BlackandWhite"
             sampler2D _MainTex;
             sampler2D _RenderTex;
             int _TurnOn;
+            fixed4 _Color;
 
             fixed4 frag (v2f i) : SV_Target
             {
@@ -74,10 +76,14 @@ Shader "Hidden/BlackandWhite"
 
                 if(Rcol.a!=0){
                 fixed bluecol= (Rcol.r+Rcol.b+Rcol.g)/3;
-                col.rgb=0;
-                col.g=bluecol;
-                col.r=bluecol/5;
-                col.b=bluecol;
+                _Color*=bluecol;
+
+                //col.rgb=0;
+                //col.g=bluecol;
+                //col.r=bluecol/5;
+                //col.b=bluecol;
+                col=_Color;
+                col*=2;
                 //col.b=1;
                 }
                 }
