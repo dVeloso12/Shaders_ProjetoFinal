@@ -30,7 +30,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _slider: 30
+    - _slider: 23
     - slider: 10
     m_Colors:
     - _position_boat: {r: 0, g: 0, b: 0, a: 0}
