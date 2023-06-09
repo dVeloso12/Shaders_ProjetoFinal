@@ -1,6 +1,6 @@
-Shader "Unlit/detect"
+Shader "Unlit/Test"
 {
-    Properties
+     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
         _NoiseTex ("cutout_texture", 2D) = "defaulttexture" {}
@@ -10,12 +10,13 @@ Shader "Unlit/detect"
     }
     SubShader
     {
-        Tags { "RenderType"="Opaque" }
-        LOD 100
+        Tags { "Queue" = "Transparent" }
+        Blend SrcAlpha OneMinusSrcAlpha    
+        LOD 200
 
         Pass
         {
-        Blend SrcAlpha OneMinusSrcAlpha
+        
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
@@ -27,14 +28,16 @@ Shader "Unlit/detect"
             {
                 float4 vertex : POSITION;
                 float2 uv : TEXCOORD0;
+
             };
 
             struct v2f
             {
                 float2 uv : TEXCOORD0;
                 float4 vertex : SV_POSITION;
-                float render:TEXCOORD1;
-                float3 wpos:TEXCOORD2;
+
+                float3 textCoord : TEXCOORD3;
+
             };
 
             sampler2D _MainTex;
@@ -48,8 +51,27 @@ Shader "Unlit/detect"
             v2f vert (appdata v)
             {
                 v2f o;
-                o.wpos=mul(unity_ObjectToWorld,v.vertex); 
+                 if(v.vertex.x <= _Alpha)
+                v.vertex.x = _Alpha - 0.5;
+                //o.wpos=mul(unity_ObjectToWorld,v.vertex); 
                 o.vertex = UnityObjectToClipPos(v.vertex);
+
+               
+
+
+
+                //o.textCoord.xy = v.uv.xy;
+
+                //float dist = distance(_WorldSpaceCameraPos, mul(unity_ObjectToWorld, v.vertex));
+
+                // // map the distance to an fade interval
+                //float beginfade = 20;
+                //float endfade = 30;
+                //float alpha = min(max(dist, beginfade), endfade) - beginfade;
+                //alpha = 1 - alpha / (endfade - beginfade);
+
+                //// put alpha somewhere unused to deliver it to the fragment shader
+                //o.textCoord.z = alpha ;
 
 
 
@@ -63,20 +85,9 @@ Shader "Unlit/detect"
             {
                fixed4 col_2=tex2D(_NoiseTex,i.uv);
                fixed4 col =tex2D(_MainTex,i.uv);
-             
-                i.render=distance(i.wpos.xyz,_position_boat.xyz);
-                i.render/=_slider;
-                i.render=saturate(1-i.render);
-                col.a=i.render;
 
-                
-                //if(i.render>0 && i.render<0.1)
-                //{
-                // col.rgb=float4(1,1,0,1);
-            
-                //}
-                //col.a = _Alpha;
-              
+                //col.a = i.textCoord.z;
+                //col.a = 0;
                 return col;
             }
             ENDCG

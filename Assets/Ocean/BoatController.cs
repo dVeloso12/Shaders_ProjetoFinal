@@ -31,6 +31,7 @@ public class BoatController : MonoBehaviour
             GoForward();
         }
         TurnShip(Input.GetAxis("Horizontal"));
+        Shader.SetGlobalVector("_position_boat", transform.position);
     }
 
     void GoForward()
