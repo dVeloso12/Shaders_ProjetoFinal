@@ -33,7 +33,7 @@ Material:
     - _Stencil: 1
     - _StencilComp: 8
     - _StencilOp: 2
-    - _TurnOn: 1
+    - _TurnOn: 0
     m_Colors:
     - _Color: {r: 0.030259816, g: 0.9433962, b: 0.4597849, a: 0}
   m_BuildTextureStacks: []

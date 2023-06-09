@@ -28,27 +28,34 @@ public class Floater : MonoBehaviour
     void FixedUpdate()
     {
         FloatersUnderWater = 0;
-        for (int i = 0; i < Floaters.Length; i++)
-        {
+        Vector3 vel=Rb.velocity;
+      
             //float diff = Floaters[i].position.y - wave.getHeightAtPosition(Floaters[i].position);
-            float diff = Floaters[i].position.y - WaterHeight;
+            float diff = transform.position.y;
+            Debug.Log(transform.position.y+" "+diff);
+        if (transform.position.y < 0)
+        {
+            Debug.Log(transform.position.y + "OFF");
+            //Rb.AddForceAtPosition(Vector3.up * FloatingPower * Mathf.Abs(diff), transform.position, ForceMode.Force);
 
-            if (diff < 0)
+            vel.y = FloatingPower;
+            if (!Underwater)
             {
-                Rb.AddForceAtPosition(Vector3.up * FloatingPower * Mathf.Abs(diff), Floaters[i].position, ForceMode.Force);
-                FloatersUnderWater += 1;
-                if (!Underwater)
-                {
-                    Underwater = true;
-                    SwitchState(true);
-                }
+                Underwater = true;
+                SwitchState(true);
+            }
+
+
+            if (Underwater && FloatersUnderWater == 0)
+            {
+                Underwater = false;
+                SwitchState(false);
             }
         }
-        if (Underwater && FloatersUnderWater == 0)
-        {
-            Underwater = false;
-            SwitchState(false);
-        }
+        else if(transform.position.y>5)
+            vel.y = -FloatingPower * 3;
+
+        Rb.velocity = vel;
     }
     void SwitchState(bool isUnderwater)
     {
