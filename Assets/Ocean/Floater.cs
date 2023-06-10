@@ -32,10 +32,10 @@ public class Floater : MonoBehaviour
       
             //float diff = Floaters[i].position.y - wave.getHeightAtPosition(Floaters[i].position);
             float diff = transform.position.y;
-            Debug.Log(transform.position.y+" "+diff);
+            //Debug.Log(transform.position.y+" "+diff);
         if (transform.position.y < 0)
         {
-            Debug.Log(transform.position.y + "OFF");
+            //Debug.Log(transform.position.y + "OFF");
             //Rb.AddForceAtPosition(Vector3.up * FloatingPower * Mathf.Abs(diff), transform.position, ForceMode.Force);
 
             vel.y = FloatingPower;

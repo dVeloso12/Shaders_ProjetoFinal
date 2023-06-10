@@ -8,6 +8,7 @@ public class WireframeSwitch : MonoBehaviour
     Material otherMat;
     bool turnOn = false;
     Renderer render;
+    public bool CanSwap;
     void Start()
     {
         render = GetComponent<Renderer>();
@@ -19,7 +20,8 @@ public class WireframeSwitch : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            turnOn = !turnOn;
+            
+            turnOn = GameManager.Instance.FocusVision;
             if (turnOn)
             {
                 render.material = Wireframe;

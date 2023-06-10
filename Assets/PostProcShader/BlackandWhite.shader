@@ -82,8 +82,8 @@ Shader "Hidden/BlackandWhite"
                 //col.g=bluecol;
                 //col.r=bluecol/5;
                 //col.b=bluecol;
-                col=_Color;
-                col*=2;
+                col=Rcol;
+                //col*=2;
                 //col.b=1;
                 }
                 }

@@ -9,11 +9,20 @@ public class PostProcessing : MonoBehaviour
     RenderTexture render;
     bool turnOn = false;
 
+    private void Start()
+    {
+        if (turnOn)
+        {
+            mat.SetInt("_TurnOn", 1);
+        }
+        else
+            mat.SetInt("_TurnOn", 0);
+    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            turnOn = !turnOn;
+            turnOn = GameManager.Instance.FocusVision;
             if (turnOn)
             {
                 mat.SetInt("_TurnOn", 1);
