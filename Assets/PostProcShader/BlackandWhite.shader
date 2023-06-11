@@ -74,7 +74,7 @@ Shader "Hidden/BlackandWhite"
                 if(_TurnOn!=0){
                 col.rgb=bluecol;
 
-                if(Rcol.a!=0){
+                if(Rcol.r!=0||Rcol.b!=0||Rcol.g!=0){
                 fixed bluecol= (Rcol.r+Rcol.b+Rcol.g)/3;
                 _Color*=bluecol;
 
