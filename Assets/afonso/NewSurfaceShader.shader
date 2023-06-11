@@ -9,7 +9,7 @@ Shader "Custom/NewSurfaceShader"
 
     SubShader
     {
-     
+     Cull Off ZWrite Off ZTest Always
         CGPROGRAM
             #pragma surface surf Lambert alpha
 
@@ -27,7 +27,7 @@ Shader "Custom/NewSurfaceShader"
         void surf(Input IN, inout SurfaceOutput o) {
               
              fixed3 albedo = tex2D(_MainTex, IN.uv_MainTex).rgb;	
-			o.Albedo = albedo;
+		    	o.Albedo = albedo;
              float render=distance(IN.worldPos.xyz,_position_boat.xyz);
              render*=_slider;
              render=saturate(render);

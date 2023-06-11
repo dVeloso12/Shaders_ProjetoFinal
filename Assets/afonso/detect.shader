@@ -4,13 +4,15 @@ Shader "Unlit/detect"
     {
         _MainTex ("Texture", 2D) = "white" {}
         _NoiseTex ("cutout_texture", 2D) = "defaulttexture" {}
-        _slider ("bruh", Range (0, 100)) = 0
+        _slider ("bruh", Range (0, 500)) = 0
         _Alpha ("Alpha", Range (0, 1)) = 0
        
     }
     SubShader
     {
-        Tags { "RenderType"="Opaque" }
+  
+       // Tags { "RenderType"="Opaque" }
+        Tags {"Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent"}
         LOD 100
 
         Pass
