@@ -66,29 +66,31 @@ Shader "Hidden/colision_post"
                fixed4 col_3 = tex2D(_MainTex_3, i.uv);
                fixed4 col = tex2D(_MainTex, i.uv);
 
-              if(_EnableBorderScreen==1)
-              {
-                 if(_Controlador<0.1f)
-                {
-                  _Controlador+=0.01*_Time.w;
-                }
-                //else
-                //{ 
-                //  _Controlador==0.1f;
-                //}
-              } 
+              //if(_EnableBorderScreen==1)
+              //{
+              // //_Controlador==0.1f;
+              //  // if(_Controlador<0.1f)
+              //  //{
+              //  //  _Controlador+=0.01*_Time.w;
+              //  //}
+              //  //else
+              //  //{ 
+              //  //  _Controlador==0.1f;
+              //  //}
+              //} 
 
-              if(_EnableBorderScreen==0)
-              {
-                if(_Controlador>0)
-                {
-                  _Controlador-=0.001*_Time.w;
-                }
-                else
-                { 
-                  _Controlador=0;
-                }
-              }
+              //if(_EnableBorderScreen==0)
+              //{
+              //  if(_Controlador>0)
+              //  {
+              //    _Controlador-=0.01*_Time.w;
+              //  }
+                 
+              //   if(_Controlador==0||_Controlador<=0)
+              //  { 
+              //    _Controlador=0;
+              //  }
+              //}
                col = tex2D(_MainTex, i.uv*(1-col_3*_Controlador));
 
                 if(col_2.a<_Controlador)
