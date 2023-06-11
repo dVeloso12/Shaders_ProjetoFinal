@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,8 +6,11 @@ using UnityEngine;
 public class post : MonoBehaviour
 {
     public Material material;
-    private void OnRenderImage(RenderTexture source, RenderTexture destination)
+    void OnRenderImage(RenderTexture src, RenderTexture dest)
     {
-        Graphics.Blit(source, destination, material);
+        // Read pixels from the source RenderTexture, apply the material, copy the updated results to the destination RenderTexture
+        Graphics.Blit(src, dest, material);
+        //Graphics.Blit(render, dest, mat);
     }
+
 }

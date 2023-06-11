@@ -12,7 +12,7 @@ public class BoatController : MonoBehaviour
     [SerializeField] private float turningSpeed = 1f;
 
     [SerializeField] public float maxTurnAngle = 360;
-
+    public bool is_moving;
     public float angle { private set; get; }
 
     // Start is called before the first frame update
@@ -29,6 +29,11 @@ public class BoatController : MonoBehaviour
         if (Input.GetKey(KeyCode.W))
         {
             GoForward();
+            is_moving = true;
+        }
+        else 
+        {
+            is_moving = false;
         }
         TurnShip(Input.GetAxis("Horizontal"));
         Shader.SetGlobalVector("_position_boat", transform.position);
