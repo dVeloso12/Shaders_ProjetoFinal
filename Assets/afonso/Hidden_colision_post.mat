@@ -34,7 +34,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Controlador: 0
+    - _Controlador: 0.03895579
     - _EnableBorderScreen: 0
     - _Frequency: 4.35
     - _Intensity: 1
