@@ -35,6 +35,8 @@ Shader "Custom/OceanShader 1"
 		[Space]
 		_WaveFoamDistance ("Wave Foam Distance",Range(0,100)) = 1
         _WaveFoamDensity ("Wave Foam Density",Range(0,100)) = 1
+
+		[Toggle] _toggleWaves("Activate Waves",Float) = 0
 	}
 	SubShader {
 		Tags { "RenderType"="Transparent" "Queue"="Transparent" }
@@ -79,6 +81,7 @@ Shader "Custom/OceanShader 1"
 			float _WaveFoamDensity;
 			float _DepthMaxDistance;
 			float _Metallic;
+			float _toggleWaves;
 
 		void vert(inout appdata_full vertexData,out Input o) {
 			UNITY_INITIALIZE_OUTPUT(Input,o);
@@ -92,9 +95,12 @@ Shader "Custom/OceanShader 1"
 
          float a = _Steepness / k;
 
-         //vertexData.vertex.y = (a * sin(f));
-         //vertexData.vertex.x += (d.x * (a * cos(f)));
-         //vertexData.vertex.z +=  (d.y * (a * cos(f)));
+		 if(_toggleWaves == 1)
+		 {
+         vertexData.vertex.y = (a * sin(f));
+         vertexData.vertex.x += (d.x * (a * cos(f)));
+         vertexData.vertex.z +=  (d.y * (a * cos(f)));
+		 }
 		o.localPos = vertexData.vertex.xyz;
 		 
          float3 tangent = normalize(float3(1- k * _Steepness * sin(f),k * _Steepness * cos(f),0));
@@ -106,16 +112,19 @@ Shader "Custom/OceanShader 1"
 
 		void surf (Input IN, inout SurfaceOutputStandard o) {
 			
+			//ira retornar a depth da superfice da agua , valores entre 0 e 1
 			float existingDepth01 = tex2Dproj(_CameraDepthTexture, UNITY_PROJ_COORD(IN.screenPos)).r;
-			float existingDepthLinear = LinearEyeDepth(existingDepth01);
-			float depthDifference = existingDepthLinear - IN.screenPos.w;
-
+			float existingDepthLinear = LinearEyeDepth(existingDepth01); // distancia entrea a camera e uma posiçao na scene
+			float depthDifference = existingDepthLinear - IN.screenPos.w; //diferença entre a profundidade da agua e da camera
+			//colocar a diferença da depth em forma de percentagem 
 			float waterDepthDifference01 = saturate(depthDifference / _DepthMaxDistance);
 			float4 waterColor = lerp(_ShallowColor, _WaterFogColor, waterDepthDifference01);
 	
+			//mudar as Uvs e normais da noiseText para Animar o shader
 			float2 noiseUVFoam = float2(IN.uv_FoamTexture.x + _Time.y * _OceanSpeed.x, IN.uv_FoamTexture.y + _Time.y * _OceanSpeed.y);
 			float2 normalUV = float2(IN.uv_Normal1.x + _Time.y * _OceanSpeed.x, IN.uv_Normal1.y + _Time.y * _OceanSpeed.y);
 
+			//"load" da noise text
 			float surfaceNoiseSample = tex2D(_FoamTexture, noiseUVFoam).r;
 			
 
@@ -137,6 +146,7 @@ Shader "Custom/OceanShader 1"
 			}
 			o.Smoothness = 1-_Metallic;
 			o.Normal = tex2D(_Normal1,normalUV);
+			//Aplica Fog debaixo de agua atraves da profundidade
 			o.Emission = ColorBelowWater(IN.screenPos) * (1 - o.Alpha);
 			
 			

@@ -6,6 +6,7 @@ Shader "Unlit/detect"
         _NoiseTex ("cutout_texture", 2D) = "defaulttexture" {}
         _slider ("bruh", Range (0, 500)) = 0
         _Alpha ("Alpha", Range (0, 1)) = 0
+
        
     }
     SubShader
