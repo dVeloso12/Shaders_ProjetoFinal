@@ -10,8 +10,7 @@ Material:
   m_Name: OceanMat
   m_Shader: {fileID: 4800000, guid: b569c89f40193dc4e82fd9d6a010e7cf, type: 3}
   m_ValidKeywords: []
-  m_InvalidKeywords:
-  - _TOGGLEWAVES_ON
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -41,13 +40,13 @@ Material:
     - _SurfaceNoiseCutoff: 0.586
     - _Test: 49.7
     - _Test2: 21.7
-    - _WaterFogDensity: 0.03
+    - _WaterFogDensity: 0.84
     - _WaterFogDensity2: 0.1
     - _WaveDistance: 48.1
     - _WaveFoamDensity: 100
     - _WaveFoamDistance: 57.8
     - _Wavelengh: 0.29
-    - _toggleWaves: 1
+    - _toggleWaves: 0
     m_Colors:
     - _DepthGradientDeep: {r: 0.24827339, g: 0.29831967, b: 0.41509432, a: 0.749}
     - _DepthGradientShallow: {r: 0, g: 0.7464113, b: 1, a: 0.725}

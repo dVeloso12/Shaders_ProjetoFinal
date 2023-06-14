@@ -21,7 +21,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 8d33aaba0059e934497cf08c1f04771d, type: 3}
+        m_Texture: {fileID: 2800000, guid: 6685b59f69cba5b42a158c29f9bf8ed0, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _dissolveTex:
@@ -30,9 +30,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Edges: 0.031
-    - _Extrude: 0.0037
-    - _Level: 0.102
+    - _Edges: 0
+    - _Extrude: 0
+    - _Level: 0
     - _dissolveamount: 0
     - _slide: 0
     - _slidePitch: 0

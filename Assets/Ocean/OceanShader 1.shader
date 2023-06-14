@@ -7,7 +7,6 @@ Shader "Custom/OceanShader 1"
 		[Header(Ocean Textures )] 
 		[Space]
 		_WaterBackground ("Ocean Color", Color) = (1,1,1,1)
-        _Alpha ("Alpha",Range(0,1)) = 1
         _Metallic ("Metallic",Range(0,1)) = 1
 		_Normal1("Ocean Normal 1",2D) = "defaulttexture"{}
 		_OceanSpeed("OCean Speed", Vector) = (0.03, 0.03, 0, 0)
@@ -21,7 +20,6 @@ Shader "Custom/OceanShader 1"
 		[Header(Depth)] 
 		[Space]
 		_WaterFogColor ("Water Fog Color", Color) = (0, 0, 0, 0)
-		_WaterFogDensity ("Water Fog Density", Range(0, 2)) = 0.1
 		[Header(Foam Edges)] 
 		[Space]
 		_ShallowColor("Depth Gradient Shallow", Color) = (0.325, 0.807, 0.971, 0.725)
@@ -48,7 +46,7 @@ Shader "Custom/OceanShader 1"
 		#pragma surface surf Standard alpha vertex:vert addshadow finalcolor:ResetAlpha
 		#pragma target 3.0
 
-		#include "LookingThroughWater.cginc"
+
 
 		#define PI 3.14
 
@@ -71,7 +69,6 @@ Shader "Custom/OceanShader 1"
             float _Wavelengh;
             float _Speed;
             float2 _Direction;
-			float _Alpha;
 			float _FoamDistance;
 
 			float4 _ShallowColor;
@@ -83,7 +80,12 @@ Shader "Custom/OceanShader 1"
 			float _Metallic;
 			float _toggleWaves;
 
+			sampler2D _CameraDepthTexture,_FoamTexture;
+			float4 _WaterFogColor;
+
+
 		void vert(inout appdata_full vertexData,out Input o) {
+		
 			UNITY_INITIALIZE_OUTPUT(Input,o);
 		 float k = (2 * PI) / (_Wavelengh);
          float speed = sqrt(9.8 / k) * _Speed;
@@ -95,19 +97,16 @@ Shader "Custom/OceanShader 1"
 
          float a = _Steepness / k;
 
+
 		 if(_toggleWaves == 1)
 		 {
          vertexData.vertex.y = (a * sin(f));
          vertexData.vertex.x += (d.x * (a * cos(f)));
          vertexData.vertex.z +=  (d.y * (a * cos(f)));
-		 }
-		o.localPos = vertexData.vertex.xyz;
 		 
-         float3 tangent = normalize(float3(1- k * _Steepness * sin(f),k * _Steepness * cos(f),0));
-         float3 binormal = float3(-d.x * d.y * (_Steepness * sin(f)),d.y * (_Steepness * cos(f)),1-d.y * d.y * (_Steepness * sin(f)));
+		o.localPos = vertexData.vertex.xyz;
 
-         float3 normal = normalize(cross(binormal,tangent));
-
+		 }
 		}
 
 		void surf (Input IN, inout SurfaceOutputStandard o) {
@@ -129,12 +128,11 @@ Shader "Custom/OceanShader 1"
 			
 
 			float foamDepthDifference01 = saturate(depthDifference / _FoamDistance);
-			float surfaceNoiseCutoff = foamDepthDifference01 * 1;
 
-			float surfaceNoise = surfaceNoiseSample > surfaceNoiseCutoff ? 1 : 0;
+			float surfaceNoise = surfaceNoiseSample > foamDepthDifference01 ? 1 : 0;
 
 			o.Albedo = waterColor + (_FoamColor* surfaceNoise);
-			o.Alpha = _Alpha;
+			o.Alpha = 1;
 			
 			if(max(0,IN.localPos.y))
 			{
@@ -146,9 +144,7 @@ Shader "Custom/OceanShader 1"
 			}
 			o.Smoothness = 1-_Metallic;
 			o.Normal = tex2D(_Normal1,normalUV);
-			//Aplica Fog debaixo de agua atraves da profundidade
-			o.Emission = ColorBelowWater(IN.screenPos) * (1 - o.Alpha);
-			
+		
 			
 		}
 
