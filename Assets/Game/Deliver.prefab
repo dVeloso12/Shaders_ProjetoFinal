@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 3841560008306831295}
   - component: {fileID: 3841560008306831288}
   - component: {fileID: 3841560008306831291}
+  - component: {fileID: -5205066389996249849}
+  - component: {fileID: -2325079466000480638}
   m_Layer: 6
   m_Name: Deliver
   m_TagString: Untagged
@@ -64,7 +66,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c9437f0131884f541bc01e273de30b3b, type: 2}
+  - {fileID: 2100000, guid: 2ca8c1671efced64e84ed2e516f5e502, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -113,6 +115,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Number: 1
   Wireframe: {fileID: 2100000, guid: 8cfb2dc886c58694ba45b4245c6358dc, type: 2}
+  RightStation: 0
 --- !u!65 &3841560008306831291
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -126,3 +129,41 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 4, y: 3, z: 4}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-5205066389996249849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3841560008306831281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e780e8de48662ec48b9fa9622423f2b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  extrude: 0
+  dissolve: 0
+  Edges: 0
+  Open: {fileID: 0}
+  Close: {fileID: 0}
+  animator: {fileID: 0}
+--- !u!95 &-2325079466000480638
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3841560008306831281}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a5eee1cc39a53a04d829f6f74c91aeba, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0

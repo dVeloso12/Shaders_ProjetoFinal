@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2388037046238964515}
   - component: {fileID: 2388037046238964519}
   - component: {fileID: 8267202427870374438}
+  - component: {fileID: 7833574271106196748}
   m_Layer: 6
   m_Name: PickUp
   m_TagString: Untagged
@@ -128,3 +129,21 @@ MonoBehaviour:
   Wireframe: {fileID: 2100000, guid: 15765d2217e434440963092385c3d802, type: 2}
   CanSwap: 0
   RightStation: 0
+--- !u!114 &7833574271106196748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2388037046238964525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e780e8de48662ec48b9fa9622423f2b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  extrude: 0
+  dissolve: 0
+  Edges: 0
+  Open: {fileID: 0}
+  Close: {fileID: 0}
+  animator: {fileID: 0}

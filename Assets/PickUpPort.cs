@@ -11,10 +11,12 @@ public class PickUpPort : MonoBehaviour
     Renderer render;
     public bool CanSwap;
    public bool RightStation;
+    DeliverShaderController dev;
     void Start()
     {
         render = GetComponent<Renderer>();
         otherMat = render.material;
+        dev = GetComponent<DeliverShaderController>();
     }
 
     // Update is called once per frame
@@ -28,7 +30,6 @@ public class PickUpPort : MonoBehaviour
 
             turnOn = !GameManager.Instance.FocusVision;
 
-            Debug.Log(turnOn);
             if (turnOn && RightStation)
             {
                 render.material = Wireframe;
@@ -60,6 +61,7 @@ public class PickUpPort : MonoBehaviour
         {
             GameManager.Instance.Deliver = Random.Range(1, GameManager.Instance.TotalDeliver);
             GameManager.Instance.Pickup = -1;
+            dev.AnimationPlay(0);
         }
     }
 }

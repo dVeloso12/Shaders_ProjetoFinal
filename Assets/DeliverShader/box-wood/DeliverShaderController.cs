@@ -8,7 +8,9 @@ public class DeliverShaderController : MonoBehaviour
     public float extrude;
     public float dissolve;
     public float Edges;
-
+    public AnimationClip Open;
+    public AnimationClip Close;
+    public Animator animator;
 
     void Start()
     {
@@ -16,6 +18,7 @@ public class DeliverShaderController : MonoBehaviour
         extrude = mat.GetFloat("_Extrude");
         dissolve = mat.GetFloat("_Level");
         Edges = mat.GetFloat("_Edges");
+        animator = GetComponent<Animator>();
 
     }
 
@@ -26,5 +29,15 @@ public class DeliverShaderController : MonoBehaviour
         mat.SetFloat("_Level", extrude);
         mat.SetFloat("_Edges", Edges);
 
+    }
+
+    public void AnimationPlay(int i)
+    {
+        if (i == 0)
+        {
+            animator.SetTrigger("CanOpen");
+            Debug.Log("MOOO");
+        }
+        
     }
 }

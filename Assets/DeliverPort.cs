@@ -9,12 +9,14 @@ public class DeliverPort : MonoBehaviour
     Material otherMat;
     bool turnOn = false;
     Renderer render;
+    DeliverShaderController dev;
    
     public bool RightStation;
     void Start()
     {
         render = GetComponent<Renderer>();
         otherMat = render.material;
+        dev = GetComponent<DeliverShaderController>();
     }
 
     // Update is called once per frame
@@ -50,6 +52,7 @@ public class DeliverPort : MonoBehaviour
         if (RightStation)
         {
             GameManager.Instance.DeliveredCrate();
+            dev.AnimationPlay(0);
         }
     }
 }

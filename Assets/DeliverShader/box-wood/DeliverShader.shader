@@ -3,6 +3,7 @@ Shader "Unlit/DeliverShader"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
+        _Color("Cor",Color) = (0,0,0,1)
         _Extrude ("Extrude", Range(0,1)) = 0
          _dissolveTex("dissolve",2D) = "defalttexture" {}
          _EdgeColour1 ("Edge colour 1", Color) = (1.0, 1.0, 1.0, 1.0)
@@ -16,6 +17,7 @@ Shader "Unlit/DeliverShader"
         //geral pass 
         Pass
         {
+        
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
@@ -45,6 +47,7 @@ Shader "Unlit/DeliverShader"
             float4 _EdgeColour1;
 			float _Level;
 			float _Edges;
+            fixed4 _Color;
 
 
 
@@ -62,6 +65,7 @@ Shader "Unlit/DeliverShader"
      
                 float cutout = tex2D(_dissolveTex, i.uv).r;
                 fixed4 col = tex2D(_MainTex, i.uv);
+                col*=_Color;
                 
                 if (cutout < _Level)
 					discard;

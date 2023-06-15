@@ -25,7 +25,6 @@ public class LightHouseRotate : MonoBehaviour
         {
             RightIsland = true;
             Light.SetInt("_TurnOn", 1);
-            Debug.Log("FUUU");
         }
         else
         {
