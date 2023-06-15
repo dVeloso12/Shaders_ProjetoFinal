@@ -3,10 +3,9 @@ Shader "Unlit/DeliverShader"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        _Extrude ("Extrude", Range(0,0.055)) = 0
+        _Extrude ("Extrude", Range(0,1)) = 0
          _dissolveTex("dissolve",2D) = "defalttexture" {}
          _EdgeColour1 ("Edge colour 1", Color) = (1.0, 1.0, 1.0, 1.0)
-		_EdgeColour2 ("Edge colour 2", Color) = (1.0, 1.0, 1.0, 1.0)
 		_Level ("Dissolution level", Range (0.0, 1.0)) = 0.1
 		_Edges ("Edge width", Range (0.0, 1.0)) = 0.1
     }
@@ -44,7 +43,6 @@ Shader "Unlit/DeliverShader"
             float _Extrude;
             sampler2D _dissolveTex;
             float4 _EdgeColour1;
-			float4 _EdgeColour2;
 			float _Level;
 			float _Edges;
 
@@ -69,7 +67,7 @@ Shader "Unlit/DeliverShader"
 					discard;
 
 				if(cutout < col.a && cutout < _Level + _Edges)
-					col =lerp(_EdgeColour1, _EdgeColour2, (cutout-_Level)/_Edges );
+					col =lerp(_EdgeColour1, col, (cutout-_Level)/_Edges );
 
                 return col;
             }

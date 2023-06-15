@@ -39,6 +39,6 @@ Material:
     - _slideRoll: 0
     - _slideyaw: 0
     m_Colors:
-    - _EdgeColour1: {r: 0.7924528, g: 0.42713287, b: 0.1898896, a: 1}
+    - _EdgeColour1: {r: 1, g: 1, b: 1, a: 1}
     - _EdgeColour2: {r: 0.40682566, g: 0.4433962, b: 0.03095406, a: 1}
   m_BuildTextureStacks: []
