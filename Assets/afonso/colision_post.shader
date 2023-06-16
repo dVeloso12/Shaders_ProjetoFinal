@@ -54,7 +54,6 @@ Shader "Hidden/colision_post"
             float _Controlador;
              float _Lado;
             float4 _ColorSquare;
-            vector _MousePosition;
             float4 _border_color;
             float _EnableBorderScreen;
            float _slider;

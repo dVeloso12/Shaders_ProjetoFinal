@@ -3,7 +3,7 @@ Shader "Unlit/detect"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        _NoiseTex ("cutout_texture", 2D) = "defaulttexture" {}
+      //  _NoiseTex ("cutout_texture", 2D) = "defaulttexture" {}
         _slider ("bruh", Range (0, 500)) = 0
         _Alpha ("Alpha", Range (0, 1)) = 0
 
@@ -51,8 +51,8 @@ Shader "Unlit/detect"
             v2f vert (appdata v)
             {
                 v2f o;
-                o.wpos=mul(unity_ObjectToWorld,v.vertex); 
                 o.vertex = UnityObjectToClipPos(v.vertex);
+                o.wpos=mul(unity_ObjectToWorld,v.vertex); 
 
 
 
@@ -64,7 +64,7 @@ Shader "Unlit/detect"
 
             fixed4 frag (v2f i) : SV_Target
             {
-               fixed4 col_2=tex2D(_NoiseTex,i.uv);
+             //  fixed4 col_2=tex2D(_NoiseTex,i.uv);
                fixed4 col =tex2D(_MainTex,i.uv);
              
                 i.render=distance(i.wpos.xyz,_position_boat.xyz);

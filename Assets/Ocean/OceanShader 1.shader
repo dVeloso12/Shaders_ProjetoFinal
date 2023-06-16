@@ -87,6 +87,7 @@ Shader "Custom/OceanShader 1"
 		void vert(inout appdata_full vertexData,out Input o) {
 		
 			UNITY_INITIALIZE_OUTPUT(Input,o);
+
 		 float k = (2 * PI) / (_Wavelengh);
          float speed = sqrt(9.8 / k) * _Speed;
          float2 d = normalize(_Direction);
